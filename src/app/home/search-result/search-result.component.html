@@ -1,0 +1,78 @@
+<div class="container-fluid    p-1  " *ngIf="spin == false else check" style="height: 83vh;" >
+  <div class=" container small d-flex  justify-content-center align-items-center  mt-2  " *ngIf="result">
+    <!-- <p class="fw-semibold text-success"> Search : <span class="fw-medium text-dark">{{searchTitle}}</span>   </p> -->
+     <p class="">Result for : <span class="text-success">{{searchTitle}}</span>  Show <span class="text-success fw-medium">{{(result.currentPage-1)*(result.pageSize+1)}} - {{result.currentPage*result.pageSize > result.totalCount? result.totalCount:result.currentPage*result.pageSize}} </span>
+      of <span class="text-success fw-medium"> {{result.totalCount}}</span> </p>
+</div>
+  <!-- Result-Section -->
+  <div class="card  border-0 " *ngIf="searchResult.length>0 else NOTRESULT">
+    <div class="card  shadow m-2  p-xl-5 mx-xl-5 " >
+      <div class="d-flex justify-content-between align-items-center mt-4">
+        <select #selectedSort  class="form-control  ms-3  text-success "
+         style="width: 7rem;"  (change)="sort($event)">
+          <option [value]=""   selected disabled  > Sort ↑↓</option>
+          <option  [value]="item.value"
+           *ngFor="let item of sortObj" >{{item.key}}</option>
+        </select>
+        <div class="ms-auto me-5 " *ngIf="result.currentPage && result.totalPages ">Page <span class="text-success">{{result.currentPage}}</span>  / {{result.totalPages}}</div>
+      </div>
+      <!-- BOOK-CARD -->
+      <div class="body d-flex flex-column mt-2 " >
+        <div class="card border-0  border-top ms-3 my-2 "  *ngFor="let book of searchResult"  >
+
+          <div class="row p-0  m-0  d-flex justify-content-center "  >
+            <div class="  col-4 p-0 pt-2  m-0    "  routerLink='/home/{{book.id}}' style="cursor: pointer; height: 15rem; width: 13rem;">
+                  <img width="100%" height="100%" class="" src="{{book.cover}}" alt="">
+            </div>
+            <div class="col-8  ">
+              <div class="container m-0  p-0 d-flex flex-column text-center text-sm-start   align-content-center  ">
+                <p class=" fw-bold my-2   " >{{book.title}}</p>
+                <small class="text-black-50 small fw-medium ">{{book.authorName}}</small>
+                 <div class="rate mt-2">
+                  <p-rating    ngModel="{{book.averageRating}}" [readonly]="true"   [cancel]="false"> </p-rating>
+                  <!-- <ng-template #none>
+                          <i class="fa-solid fa-star text-warning "></i> 5
+                   </ng-template> -->
+                 </div>
+
+                 <div class="price mt-2 text-center text-sm-start  small  ">
+                  <ng-template #price>
+                    <p >{{book.price|currency}}  </p>
+                  </ng-template>
+                  <p *ngIf="book.discountPrice>0 else price" class="text-decoration-line-through text-danger small  mb-0  ">{{book.price|currency}} </p>
+                  <p  *ngIf="book.discountPrice>0">  &#xa0;{{book.discountPrice|currency}}</p>
+                 </div>
+                 <div class="add">
+                  <div class=" mt-3">
+                    <i class="fa-solid fa-cart-shopping fs-5 text-success " (click)="addToCart(book.id,book.title)" style="cursor: pointer;"></i>
+                    <i class="fa-regular fa-heart fs-5 ms-3 text-danger " (click)="addToWishList(book.id,book.title)" style="cursor: pointer;"></i>
+
+                  </div>
+                 </div>
+
+              </div>
+            </div>
+          </div>
+
+      </div>
+
+      </div>
+
+       <!-- BOOK-CARD -->
+    </div>
+     <!-- Paging -->
+  <div class="flex-auto"  >
+    <p-paginator #paginator  (onPageChange)="onPageChange($event)"   [rows]=result.pageSize  [totalRecords]=result.totalCount ></p-paginator>
+  </div>
+  </div>
+  <ng-template  #NOTRESULT>
+    <h1 class="text-center w-100 h-100 d-flex justify-content-center align-items-center">No Result Was Found !</h1>
+  </ng-template>
+
+  <p-toast></p-toast>
+  <!-- Result-Section -->
+</div>
+
+<ng-template #check>
+  <app-main-spinner></app-main-spinner>
+</ng-template>

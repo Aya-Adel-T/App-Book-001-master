@@ -1,0 +1,9 @@
+.error-message {
+  color: red;
+  font-weight: bold;
+  /* Add any other styling properties you desire */
+}
+
+.validateerrorstyle {
+  /* Add any additional styling properties for the error container div if needed */
+}

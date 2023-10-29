@@ -1,0 +1,49 @@
+<div class="row mt-5 mb-4 text-center">
+  <div class=" justify-content-center ">
+    <button [routerLink]="['/addBookInfo']" class="btn btn-info ">Add new book</button>
+    </div>
+  </div>
+  <div class="container">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">ISBN</th>
+          <th scope="col">Title</th>
+          <th scope="col">Image</th>
+          <th scope="col">Author</th>
+          <th scope="col">Edition</th>
+          <th scope="col">Number of Pages</th>
+          <th scope="col">Original Language</th>
+          <th scope="col">Translated to Language</th>
+          <th scope="col">Price</th>
+          <th scope="col">Publisher</th>
+          <th scope="col">Year</th>
+          <th scope="col" > Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let book of book.data.reverse(); let i = index" id="id+1">
+          <td>{{ i+1 }}</td>
+          <td>{{ book.isbn }}</td>
+          <td>{{ book.title }}</td>
+          <td><img [src]="book.cover" height="60" width="60" style="border-radius: 40%;"></td>
+          <td>{{ book.author.userName }}</td>
+
+          <td>{{ book.edition }}</td>
+          <td>{{ book.numberOfPages }}</td>
+          <td>{{ book.originalLanguage }}</td>
+          <td>{{ book.translatedToLanguage }}</td>
+          <td>{{ book.price }}</td>
+          <td>{{ book.publisher }}</td>
+          <td>{{ book.year }}</td>
+          <td>
+            <div class="btn-group">
+              <button (click)="add(book.id)" class="btn btn-primary">Add</button>
+            </div>
+            <h6 style="color:red">{{err}}</h6>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

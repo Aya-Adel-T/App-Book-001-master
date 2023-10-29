@@ -1,0 +1,8 @@
+:host ::ng-deep
+.acceptButtonStyleClass {
+  background: cyan;
+}
+
+.ui-dialog-footer .ui-button + .ui-button {
+  background: cyan;
+}

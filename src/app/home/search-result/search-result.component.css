@@ -1,0 +1,11 @@
+:host ::ng-deep
+    .p-rating-icon {
+    color: gold !important;
+    height: 0.9rem;
+
+}
+:host ::ng-deep
+ .p-highlight{
+  color:#0dd6b8 !important;
+
+}

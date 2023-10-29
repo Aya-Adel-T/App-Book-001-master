@@ -1,0 +1,111 @@
+<div class="container-fluid d-flex justify-content-center mt-5 align-items-center " style="height:80vh;width: auto;">
+    <section class="" >
+      <div class="container  ">
+        <div class="row d-flex justify-content-center align-items-center ">
+          <div class="col-lg-12 col-xl-11">
+            <div class="card border-0 shadow  text-black" style="border-radius: 25px">
+              <div class="card-body p-md-5">
+                <div class="row justify-content-center">
+                  <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
+                      <span class="head">Welcome back</span>
+                    </p>
+
+                    <form
+                      id="formlogin"
+                      class="text-sm-start mx-1 mx-md-4"
+                      (ngSubmit)="login()"
+                      [formGroup]="loginForm"
+                    >
+                      <div class="mb-4">
+                        <label for="email" class="form-label">USERNAME</label>
+                        <input
+                          type="email"
+                          class="form-control rounded-0"
+                          id="email"
+                          formControlName="emailOrUsername"
+                        />
+                        <ng-container *ngIf="emailControl.touched">
+                          <div
+                            *ngIf="emailControl.hasError('required')"
+                            class="form-text text-danger"
+                          >
+                            email is required
+                          </div>
+
+                        </ng-container>
+                      </div>
+                      <div class="mb-4">
+                        <label for="password" class="form-label">PASSWORD</label>
+                        <input
+                          type="password"
+                          class="form-control rounded-0"
+                          placeholder="Enter your password"
+                          id="password"
+                          formControlName="password"
+                        />
+                        <ng-container *ngIf="passwordControl.touched">
+                          <div
+                            *ngIf="passwordControl.hasError('required')"
+                            id="emailHelp"
+                            class="form-text text-danger"
+                          >
+                            password is required
+                          </div>
+                          <div
+                            *ngIf="passwordControl.hasError('minlength')"
+                            id="emailHelp"
+                            class="form-text text-danger"
+                          >
+                            minlength is 8 char.
+                          </div>
+                        </ng-container>
+                        <div
+                          *ngIf="errorMessage || errors"
+                          id="emailHelp"
+                          class="form-text text-danger"
+                        >
+                          {{errorMessage}}  {{errors}}
+                        </div>
+                        <a class="btn text-primary" routerLink="/forgetPassword">Forgot password?</a>
+                      </div>
+                      <button
+                      [disabled]="loginForm.invalid"
+                      type="submit"
+                      class="btn btn-primary col-12 rounded-0 mb-3  "
+                      *ngIf= 'isSuccess == false else check'
+                    >
+                      Login
+                    </button>
+                      <ng-template #check>
+                        <app-spinner></app-spinner>
+                      </ng-template>
+
+
+
+
+                      <p class="mb-3 text-center">
+                        New To E-Book?
+                        <a routerLink="/register" class="fs-6">Register Now</a>
+                      </p>
+                      <hr class="mb-3" />
+                    </form>
+                  </div>
+                  <div
+                    class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2"
+                  >
+                    <img
+                      src="assets\images\img2.jpg"
+                      class="img-fluid"
+                      alt="Sample image"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>

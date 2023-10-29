@@ -1,0 +1,59 @@
+<div class="container vw-100 d-flex justify-content-center" *ngIf="spinnerFlag == false else spin">
+    <div class="card   w-100  mt-5">
+        <div class="card-header bg-success-subtle border-bottom-0 fs-5  fw-medium text-center  ">
+            Your Cart <i class="fa-solid fa-cart-shopping text-success fs-5 fw-bold "></i>
+        </div>
+        <!-- ITEMS -->
+        <div *ngIf="cartItems.length > 0 else empty" >
+            <div class="container-fluid mt-2" >
+                <div class="row border-bottom py-3 "  *ngFor="let item of cartItems; let i = index">
+                    <div class="col-1 d-flex align-items-center justify-content-end   ">
+                        <p class="text-black-50 ">{{i+1}}</p>
+                    </div>
+                    <div class=" col-3 col-lg-2 p-2  d-flex  justify-content-center " >
+
+                        <img height="100" width="70"  src="{{item.book.cover}}" alt="">
+                    </div>
+                    <div class="col-6 col-lg-7   flex-column  d-flex justify-content-center   ">
+                        <p class="fw-semibold mb-1   "> {{item.book.title}}</p>
+                        <small class="">Year : {{item.book.year}}</small>
+                        <small>Price :
+                            <ng-template #price>
+                                <span class="fw-medium "> {{item.book.price |currency}}</span>
+                            </ng-template>
+                            <span class="text-decoration-line-through text-danger" *ngIf="item.book.discountPrice>0 else price">
+                                {{item.book.price|currency}}
+                            </span>
+                            <span *ngIf="item.book.discountPrice>0" class="fw-medium ">
+                                &#xa0;{{item.book.discountPrice|currency}}
+                            </span>
+                        </small>
+                    </div>
+                    <div class=" col-2 col-lg-2  d-flex justify-content-center  align-items-center ">
+                         <button type="button" class="btn btn-outline-danger  d-flex py-2" (click)="onDelete(item.book.id)" pButton icon="pi pi-check" >
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                        <!-- <button class="btn btn-outline-danger "><i class="fa-solid fa-trash"></i></button> -->
+                    </div>
+                </div>
+            </div>
+            <!-- ITEMS -->
+            <div class="card-footer bg-success-subtle border-bottom border-top-0 mt-5 fw-medium d-flex  justify-content-center " *ngIf="totalAmount>0" >
+                Total Price = <span class="text-success ">{{totalAmount|currency}}</span>
+            </div>
+            <div class="d-flex  justify-content-center align-items-center    ">
+                    <button *ngIf="totalAmount>0" class="btn w-50 my-2" style="color:white   !important; background-color:#0dd6b8;" (click)="proceed()">
+                        Place Order
+                    </button>
+            </div>
+        </div>
+        <ng-template #empty>
+            <div class="text-center  m-5  p-5  fs-1 text-body-tertiary ">Cart is Empty </div>
+        </ng-template>
+        <p-toast></p-toast>
+        <p-confirmDialog  header="Delete" [breakpoints]="{ '960px': '95vw' }" [style]="{width: '60vw'}" ></p-confirmDialog>
+    </div>
+</div>
+<ng-template #spin>
+    <app-main-spinner></app-main-spinner>
+  </ng-template>

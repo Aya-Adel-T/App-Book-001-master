@@ -1,0 +1,37 @@
+<div class="container">
+  <form (ngSubmit)="submitForm()" enctype="multipart/form-data">
+    <div class="form-group">
+      <br>
+      <label for="Snapshot">Select multiple snapshots for the book:</label>
+      <input type="file" id="Snapshot" name="Snapshot" (change)="onFileChange($event)" multiple accept="image"#bookFileInput>
+      <div class="validateerrorstyle" *ngIf="!bookFileInput.files || bookFileInput.files.length === 0">
+        Please select one or more snapshot for the book.
+        <p> Note: Availabe Extensions => jpg , jpeg , png</p>
+        <p style="color: red;">{{err}}</p>
+      </div>
+      <button [disabled]="!snap.Snapshot " class="btn btn-primary" type="submit">Submit</button>
+    </div>
+  </form>
+</div>
+
+<!-- <div class="form-container">
+  <h2>Upload Files</h2>
+  <form [formGroup]="fileForm" (ngSubmit)="submitForm()">
+    <div formArrayName="filesArray">
+      <div *ngFor="let file of filesArray.controls; let i = index" class="form-group">
+        <label for="file{{ i }}">File {{ i + 1 }}</label>
+        <input  type="file" [id]="'file' + i" [formControlName]="i"  required>
+        <button type="button" (click)="removeFile(i)">Remove</button>
+      </div>
+    </div>
+    <button type="button" (click)="addFile()">Add File</button>
+
+    <button type="submit" >Submit</button>
+  </form>
+</div>
+<p>create-snapshot works!</p> -->
+
+
+
+
+

@@ -1,0 +1,10 @@
+<div class="container vw-100 d-flex  flex-column  justify-content-center align-items-center " style="height: 85vh;" *ngIf="spinnerFlag == false else spin">
+  <div class="fs-5 ">
+    Purchase Completed Successfully <i class="fa-solid fa-circle-check fs-5 " style="color: green;"></i>
+  </div>
+  <p>Go to your Reads <a href="">here</a></p>
+</div>
+<ng-template #spin>
+    <app-main-spinner></app-main-spinner>
+  </ng-template>
+

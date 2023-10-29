@@ -1,0 +1,7 @@
+
+app-side-nav{
+    position: absolute;
+    left: 0.5rem;
+    top: 12.5px;
+    z-index: 50;
+}

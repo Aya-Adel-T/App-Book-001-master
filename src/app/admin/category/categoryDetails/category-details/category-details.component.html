@@ -1,0 +1,20 @@
+<p>category-details works!</p>
+
+<div  class="text-center"  >
+  <h3 style="text-align:center;" style="color:blue">categories In bookStore</h3>
+  <button routerLink="/category" class="btn btn-info" > ↩ </button>
+
+</div>
+<hr class="style-line">
+<div class="container mb-5">
+<div class="row justify-content-center row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3" >
+<div >
+  <h3>{{ category.data.name }}</h3>
+
+  <img style="width: 150px;height: 100px;" [src]="category.data.image">
+  <button routerLink="/categoryDetails/:uuid" class="btn btn-info" > Details </button>
+  <button routerLink="/editCategory" class="btn btn-info" > Edit </button>
+  <button class="btn btn-danger"> Delete </button>
+</div>
+  </div>
+</div>

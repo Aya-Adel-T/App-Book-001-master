@@ -1,0 +1,196 @@
+  <!-- OFF-CANVAS -->
+  <div class="off-canvas">
+    <!-- <button class="btn fw-semibold  fs-5  " type="button" data-bs-toggle="offcanvas"
+    data-bs-target="#offcanvasWithBothOptions" -->
+    <button class="btn   px-3 fs-4 fw-medium  " type="button" data-bs-toggle="offcanvas"
+    data-bs-target="#offcanvasWithBothOptions"
+    aria-controls="offcanvasWithBothOptions">
+    <i class="fa-solid fa-bars text-success"></i>
+    </button>
+        <div class="offcanvas offcanvas-start " style="width: 350px;" data-bs-scroll="true"
+         tabindex="-1" id="offcanvasWithBothOptions"
+     aria-labelledby="offcanvasWithBothOptionsLabel">
+      <!-- HEADER -->
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title fw-bold text-success"  id="offcanvasWithBothOptionsLabel">
+          <i class="fa-solid fa-book-open"></i>
+          Flow
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <!-- BODY -->
+      <div class="offcanvas-body">
+        <form class="d-none d-md-flex mx-auto    w-100  " role="search" [formGroup]="searchForm" (ngSubmit)="redirect()">
+          <div class="input-group">
+            <span class="input-group-text rounded-start-5 bg-white border-end-0">
+              <i class="fa-solid fa-magnifying-glass small text-success"></i>
+          </span>
+            <input  formControlName="search" [value]="searcTitle" class="form-control text-success  me-2 border-start-0 rounded-end-5" type="search" placeholder=" Search"  aria-label="Search">
+          </div>
+
+          <button hidden [disabled]="searchForm.invalid" class="btn btn-outline-success  rounded-circle   "
+           type="submit"></button>
+           <!-- <div class="p-inputgroup">
+
+            <input  placeholder="Username" />
+        </div> -->
+        </form>
+        <!-- Accordion -->
+        <div class="accordion accordion-flush" id="accordionFlushExample" >
+          <!-- Accordion-Items -->
+          <div class="accordion-item">
+            <h2 class="accordion-header " id="flush-headingOne">
+              <button class="accordion-button collapsed fw-medium text-dark-emphasis  " type="button" data-bs-toggle="collapse"
+               data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+               <div>
+                <i class="fa-solid fa-house"></i>
+                <span class=""> Shop</span>
+               </div>
+              </button>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse border-0 " aria-labelledby="flush-headingOne"
+             data-bs-parent="#accordionFlushExample">
+              <div class="accordion-body">
+                <div class="py-2">
+                  <a [routerLinkActive]="'text-success'" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/home']" class="text-decoration-none text-dark-emphasis ">
+                    <i class="fa-solid fa-house"></i>
+                      <span> Home Page</span>
+                   </a>
+                </div>
+                <div class="py-2">
+                  <a [routerLinkActive]="'text-success'" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/home/explore']" class="text-decoration-none text-dark-emphasis">
+
+                    <i class="fa-regular fa-rectangle-list"></i>
+                      <span> Explore </span>
+                   </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item " >
+            <h2 class="accordion-header" id="flush-headingTwo" *ngIf=" userRole == 'Admin'">
+              <button class="accordion-button collapsed fw-medium text-dark-emphasis " type="button" data-bs-toggle="collapse"
+              data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+              <div>
+                <i class="fa-solid fa-shield" ></i>
+                <span> Admin </span>
+              </div>
+              </button>
+            </h2>
+
+
+            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+            data-bs-parent="#accordionFlushExample">
+              <div class="accordion-body">
+                <div class="py-2">
+                  <a [routerLinkActive]="'text-success'" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/mainDashBoard']"  class="text-decoration-none text-success">
+
+                    <i class="fa-regular fa-rectangle-list"></i>
+                      <span> Dashboard</span>
+                   </a>
+                </div>
+                <div class="py-2">
+                  <a [routerLinkActive]="'text-success'" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/allBooks']"  class="text-decoration-none text-success ">
+                    <i class="fa-solid fa-book"></i>
+                      <span> Books</span>
+                   </a>
+                </div>
+                <div class="py-2">
+                  <a [routerLinkActive]="'text-success'" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/AllCoupons']"  class="text-decoration-none text-success ">
+                    <i class="fa-solid fa-book"></i>
+                      <span> coupons</span>
+                   </a>
+                </div>
+
+                <div class="py-2">
+                  <a [routerLinkActive]="'text-success'" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/allCategories']"  class="text-decoration-none text-success">
+
+                    <i class="fa-regular fa-rectangle-list"></i>
+                      <span> Categories</span>
+                   </a>
+                </div>
+                <div class="py-2">
+                  <a [routerLinkActive]="'text-success'" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/allUsers']"  class="text-decoration-none text-success">
+                    <i class="fa-solid fa-user-gear"></i>
+                      <span> Users </span>
+                   </a>
+                </div>
+                <div class="py-2">
+                  <a [routerLinkActive]="'text-success'" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/allTranslators']"   class="text-decoration-none text-success">
+                    <i class="fa-solid fa-user-gear"></i>
+                      <span> Translators </span>
+                   </a>
+                </div>
+                <div class="py-2">
+                  <a [routerLinkActive]="'text-success'" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/allFormats']"    class="text-decoration-none text-success">
+                    <i class="fa-regular fa-rectangle-list"></i>
+                      <span> Formats </span>
+                   </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item" *ngIf="userName.length > 0" >
+            <h2 class="accordion-header " id="flush-heading2" >
+              <button class="accordion-button collapsed fw-medium text-dark-emphasis " type="button" data-bs-toggle="collapse"
+               data-bs-target="#flush-collapse2" aria-expanded="false" aria-controls="flush-collapse2">
+               <div>
+                <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle ms-0 ps-0" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img *ngIf="userImage else default" src="{{userImage}}" alt="" width="20" height="20" class="rounded-circle me-1 ">
+                  <ng-template #default>
+                    <i class="fa-solid fa-circle-user text-dark   me-1  "></i>
+                  </ng-template>
+                  <div class="fw-medium text-dark-emphasis ">{{userName}}</div>
+                </a>
+               </div>
+              </button>
+            </h2>
+            <div id="flush-collapse2" class="accordion-collapse collapse border-0 " aria-labelledby="flush-headingOne"
+             data-bs-parent="#accordionFlushExample">
+              <div class="accordion-body">
+                <div class="py-2">
+                  <a [routerLinkActive]="'text-success'" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/userProfile', userId]" class="text-decoration-none text-dark-emphasis ">
+                    <i class="fa-solid fa-user"></i>
+                      <span> Profile </span>
+                   </a>
+                </div>
+                <div class="py-2">
+                  <a [routerLinkActive]="'text-success'" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['']" class="text-decoration-none text-dark-emphasis">
+                    <i class="fa-solid fa-book"></i>
+                      <span> My Reads</span>
+                   </a>
+                </div>
+                <div class="py-2">
+                  <a [routerLinkActive]="'text-success'" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['']" (click)="logout()" class="text-decoration-none text-dark-emphasis">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                      <span> Sign Out</span>
+                   </a>
+                </div>
+              </div>
+            </div>
+          </div>
+            <!-- LIST-GROUP -->
+        <ul class="list-group list-group-flush  py-2">
+          <li class="list-group-item">
+            <a  class="text-decoration-none  text-dark-emphasis fw-medium ms-1  " [routerLinkActive]="'text-success'" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/wishlist']">
+              <i class="fa-regular fa-heart"></i>
+              <span>
+                Wish List
+              </span>
+            </a>
+          </li>
+          <li class="list-group-item py-3">
+            <a  class="text-decoration-none  text-dark-emphasis fw-medium ms-1  " [routerLinkActive]="'text-success'" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/cart']">
+               <i class="fa-solid fa-cart-shopping"></i>
+              <span>
+                Cart
+              </span>
+            </a>
+          </li>
+        </ul>
+        </div>
+
+      </div>
+        </div>
+   </div>
+   <!-- OFF-CANVAS -->

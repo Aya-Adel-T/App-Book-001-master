@@ -1,0 +1,85 @@
+<div class="container-fluid p-1" style="height: 83vh;">
+  <div class="card border-0">
+    <div class="card shadow m-2 p-xl-5 mx-xl-5">
+      <div class="d-flex justify-content-between mt-4"></div>
+      <div class="container small d-flex justify-content-center align-items-center mt-2" *ngIf="result">
+        <p class="">Show <span class="text-success fw-medium">{{(result.currentPage-1)*(result.pageSize+1)}} - {{result.currentPage*result.pageSize > result.totalCount ? result.totalCount : result.currentPage*result.pageSize}}</span>
+          of <span class="text-success fw-medium">{{result.totalCount}}</span></p>
+      </div>
+      <p class="ms-auto me-5" *ngIf="result.currentPage && result.totalPages">Page {{result.currentPage}} / {{result.totalPages}}</p>
+      <div class="body d-flex flex-wrap mt-2">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Image</th>
+              <th scope="col">Email</th>
+              <th scope="col">Phone number</th>
+              <th scope="col">Nationality</th>
+              <!-- <th scope="col">Actions</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let author of searchResult; let i = index" id="id+1">
+              <td class="author-name" routerLink="/authorDetails/{{author.id}}" style="cursor: pointer;">{{ author.firstName }} {{ author.lastName }}</td>
+              <td><img [src]="author.image" height="60" width="60" style="border-radius: 40%;"></td>
+              <td  style="cursor: pointer;">{{ author.email }} </td>
+              <td  style="cursor: pointer;">{{ author.phoneNumber }} </td>
+              <td  style="cursor: pointer;">{{ author.nationality }} </td>
+
+              <td>
+                <!-- <div class="btn-group">
+                  <button [routerLink]="['/bookDetails', author.id]" class="btn btn-primary">Details</button>
+                  <button [routerLink]="['/addBook', author.id]" class="btn btn-primary">Upload Book</button>
+                  <button [routerLink]="['/addSnapshots', author.id]" class="btn btn-primary">Add Snapshots</button>
+                </div> -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="flex-auto">
+      <p-paginator (onPageChange)="onPageChange($event)" [rows]="result.pageSize" [totalRecords]="result.totalCount"></p-paginator>
+    </div>
+  </div>
+  <p-toast></p-toast>
+</div>
+
+
+
+<!-- <div class="container" >
+  <h1 style="text-align: center;"> Authors </h1>
+  <div class="btn-group d-flex justify-content-center">
+  <button [routerLink]="['/addTranslator']" class="btn btn-success">Add new authors</button>
+  </div>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Image</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let author of authors.reverse(); let i = index" id="id+1">
+        <td>{{ i+1 }}</td>
+        <td>{{ author.firstName }}  {{ author.lastName }}</td>
+        <td><img [src]="author.image" height="60" width="60" style="border-radius: 40%;"></td>
+        <td>
+          <div class="btn-group d-flex justify-content-end">
+            <button [routerLink]="['/translatorDetails', author.id]" class="btn btn-primary mr-2">Author full description</button>
+            <button [routerLink]="['/editTranslator', author.id]" class="btn btn-primary mr-2">Edit</button>
+            <button [routerLink]="['/deleteTranslator', author.id]" class="btn btn-danger">Delete</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div> -->
+
+
+

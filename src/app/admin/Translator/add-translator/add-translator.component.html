@@ -1,0 +1,44 @@
+<div class="container-fluied bg-img">
+  <div class="row bg-trans">
+    <div class="container-fluied justify-content-center mb-5 mt-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-6 col-12 p-5">
+          <h1 class="text-center">Add new translator </h1>
+          <form (ngSubmit)="onSubmit()" #translatoryForm="ngForm">
+
+  <div class="form-group">
+    <label for="name">Translator Name:</label>
+    <input type="text" class="form-control" id="name" name="name" [(ngModel)]="translator.name" required>
+  </div>
+
+
+  <div class="form-group">
+    <label for="categoryImage">translator Image:</label>
+    <input type="file" class="form-control" id="categoryImage" name="categoryImage" (change)="onFileChange($event)">
+  </div>
+  <br>
+  <div class="form-group">
+    <label for="name">Translator descritption:</label>
+    <input type="text" class="form-control" id="name" name="name" [(ngModel)]="translator.description" required>
+  </div>
+  <div class="row justify-content-center mt-1">
+    <div class="col-10 text-center">
+      <div class="row justify-content-center">
+        <div class="col-2">
+  <button  type="submit" class="btn btn-primary">Add</button>
+</div>
+        <div class="col-2">
+          <a
+            routerLink="/allTranslators"
+            class="btn btn-danger"
+            >Cancel</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>

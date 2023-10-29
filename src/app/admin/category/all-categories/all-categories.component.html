@@ -1,0 +1,21 @@
+
+<div  class="text-center"  >
+  <h3 style="text-align:center;" style="color:blue">categories In bookStore</h3>
+  <button [routerLink]="['/createCategory']" class="btn btn-info" > Add new category  </button>
+  <br><br>
+  <button routerLink="/category" class="btn btn-info" > ↩ Back</button>
+</div>
+<hr class="style-line">
+<div class="container mb-5">
+<div class="row justify-content-center row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3" >
+<div *ngFor="let category of categories.data.reverse()">
+  <h3>{{ category.name }}</h3>
+
+  <img style="width: 150px;height: 100px;" [src]="category.image">
+  <!-- <button [routerLink]="['/categoryDetails',category.id]" class="btn btn-info" > Details </button> -->
+  <button [routerLink]="['/editCategory', category.id]" class="btn btn-info" > Edit </button>
+  <button [routerLink]="['/deleteCategory', category.id]"class="btn btn-danger"> Delete </button>
+</div>
+  </div>
+</div>
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkF5YWEgRWxoYXNoYXNoIiwibmFtZWlkIjoiYjUxMDM4NjUtOTdiYi00YWJiLThlZWEtNjRhYzJiMWU5ZDc5Iiwicm9sZSI6IlJlYWRlciIsIm5iZiI6MTY5ODMxMDE2MywiZXhwIjoxNjk5MTc3NzYzLCJpYXQiOjE2OTgzMTAxNjN9.T64r8bGErC3_C0Xv2rrQ3fGNYiqZl7oKthbOYDwdgmY

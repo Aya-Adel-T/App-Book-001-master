@@ -1,0 +1,6 @@
+:host ::ng-deep
+    .p-rating-icon {
+    color: gold !important;
+    height: 0.9rem;
+
+}

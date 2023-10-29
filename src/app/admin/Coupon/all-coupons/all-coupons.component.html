@@ -1,0 +1,19 @@
+<div class="row mt-4 mb-4 text-center">
+  <h3 style="text-align:center;" style="color:blue">Coupons In bookStore</h3>
+  <div class=" justify-content-center ">
+    <button [routerLink]="['/addCoupon']" class="btn btn-success ">Add new coupon</button>
+    </div>
+</div>
+<hr class="style-line">
+<div class="container mb-5">
+<div class="row justify-content-center row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-3">
+<div *ngFor="let coupon of coupons.data.reverse()">
+  <h2> <span style="color:burlywood">Code:</span> {{ coupon.code }}</h2>
+  <h3><span style="color:burlywood">Percentage: </span>  {{ coupon.percentage }} %</h3>
+  <h5> <span style="color:burlywood">Creation date:- </span> {{ coupon.createdDate }}</h5>
+  <h5> <span style="color:burlywood">Expiration date:-</span> {{ coupon.expirationDate }}</h5>
+  <button [routerLink]="['/editCoupon', coupon.id]" class="btn btn-success">Edit</button>
+  <button [routerLink]="['/deleteCoupon', coupon.id]" class="btn btn-danger">Delete</button>
+</div>
+  </div>
+</div>

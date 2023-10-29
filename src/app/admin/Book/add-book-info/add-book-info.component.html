@@ -1,0 +1,223 @@
+<div class="container">
+  <br>
+  <button [routerLink]="['/allBooks']" class="btn btn-primary">Back</button>
+
+  <h2 class="text-center">Add Book</h2>
+
+<form (ngSubmit)="onSubmit()" novalidate #bookForm="ngForm">
+  <div class="form-group">
+    <label for="Title">Book title:</label>
+    <input placeholder="Add a title" class="form-control" type="text" id="Title" name="Title" [(ngModel)]="bookf.Title"
+     [ngClass]="{'invalid-input': (form.dirty || form.touched) && form.invalid}" required minLength="2" minlength="2" #form="ngModel"   />
+  <span class="badge bg-danger" *ngIf="(form.dirty || form.touched) && form.errors?.['required']">Required</span >
+    <span class="badge bg-danger" *ngIf="(form.dirty || form.touched) && form.errors?.['minlength']">minimun length is 2</span >
+  </div>
+  <div class="form-group">
+    <label for="ISBN">ISBN:</label>
+    <input placeholder="Add the book ISBN" type="text" class="form-control" id="ISBN" name="ISBN" [(ngModel)]="bookf.ISBN"   [ngClass]="{'invalid-input': (ISBNform.dirty || ISBNform.touched) && ISBNform.invalid}" required minLength="10" minlength="10" #ISBNform="ngModel"   />
+    <span class="badge bg-danger" *ngIf="(ISBNform.dirty || ISBNform.touched) && ISBNform.errors?.['required']">Required</span >
+      <span class="badge bg-danger" *ngIf="(ISBNform.dirty || ISBNform.touched) && ISBNform.errors?.['minlength']">minimun length is 10</span >
+  </div>
+
+  <div class="form-group">
+    <label for="Description">Description:</label>
+    <textarea type="text" class="form-control" id="Description" name="Description" [(ngModel)]="bookf.Description" required> </textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="OriginalTitle">OriginalTitle:</label>
+    <input type="text" class="form-control" id="OriginalTitle" name="OriginalTitle" [(ngModel)]="bookf.OriginalTitle" required>
+  </div>
+
+  <div class="form-group">
+    <label for="NumberOfPages">NumberOfPages :</label>
+    <input type="number"  class="form-control" id="NumberOfPages" name="NumberOfPages" [(ngModel)]="bookf.NumberOfPages" required>
+  </div>
+  <div class="form-group">
+    <label for="Year">Year :</label>
+    <input type="number"  min="1900" max="2099" step="1"  class="form-control" id="Year" name="Year" [(ngModel)]="bookf.Year" required>
+  </div>
+  <div class="form-group">
+    <label for="Edition">Edition :</label>
+    <input type="number" class="form-control" id="Edition" name="Edition" [(ngModel)]="bookf.Edition" required>
+  </div>
+  <div class="form-group">
+    <label for="Publisher">Publisher :</label>
+    <input type="text" class="form-control" id="Publisher" name="Publisher" [(ngModel)]="bookf.Publisher" required>
+  </div>
+  <div class="form-group">
+    <label for="OriginalLanguage">OriginalLanguage :</label>
+    <input type="text" class="form-control" id="OriginalLanguage" name="OriginalLanguage" [(ngModel)]="bookf.OriginalLanguage" required>
+  </div>
+
+  <div class="form-group">
+    <label for="TranslatedToLanguage">TranslatedToLanguage :</label>
+    <input type="text" class="form-control" id="TranslatedToLanguage" name="TranslatedToLanguage" [(ngModel)]="bookf.TranslatedToLanguage" required>
+  </div>
+  <div class="form-group">
+    <label for="Price">Price :</label>
+    <input type="number" class="form-control" id="Price" name="Price" [(ngModel)]="bookf.Price" [ngClass]="{'invalid-input': (priceForm.dirty || priceForm.touched) && priceForm.invalid}" required minLength="2" minlength="2" #priceForm="ngModel"   />
+    <span class="badge bg-danger" *ngIf="(priceForm.dirty || priceForm.touched) && priceForm.errors?.['required']">Add a price</span >
+  </div>
+  <style>
+    select:invalid { color: red; }
+    ::placeholder {
+  color: red;
+  opacity: 1; /* Firefox */
+}
+    </style>
+  <div class="form-group">
+    <label for="AuthorId">Author:</label>
+    <select [ngClass]="{'invalid-input': (authorForm.dirty || authorForm.touched) && authorForm.invalid}" required  #authorForm="ngModel" class="form-control" id="AuthorId" name="AuthorId"[(ngModel)]="bookf.AuthorId" required>
+      <option disabled selected value="" >Add an author</option>
+      <option  *ngFor="let author of Authors" [value]="author.id" >{{ author.userName |json }} </option>
+    </select>
+  </div>
+  <br>
+  <div class="form-group">
+    <label for="BookCoverFile">Book Cover can be jpg , jpeg or png only: </label>
+    <input  type="file" class="form-control-file" id="BookCoverFile" name="BookCoverFile" (change)="onFileChange($event)">
+    <P style="color:dimgray"> Note: If you didnt add a photo the book cover will be with our default logo</P>
+  </div>
+    <div class="form-group-container">
+      <div class="form-group form-group-categories">
+        <label for="categories" style="color: brown; font-size: 25px;">Categories:</label><br>
+        <div class="form-check" *ngFor="let category of categories">
+          <input class="form-check-input" type="checkbox" [id]="'category' + category.id" [name]="'categories'" [value]="category.id" (change)="handleCategoryChange($event, category.id)" [checked]="isChecked(category.id)">
+          <label class="form-check-label" [for]="'category' + category.id">{{ category.name }}</label>
+        </div>
+        <div style="color: red;" class="validateerrorstyle" *ngIf="!isAtLeastOneCategorySelected()">
+          Please select at least one category.
+        </div>
+      </div>
+
+    <div class="form-group form-group-translators">
+      <label for="translators" style="color: brown; font-size: 25px;">Translators:</label><br>
+      <div class="form-check" *ngFor="let translator of translators">
+        <input class="form-check-input" type="checkbox" [id]="'translator' + translator.id" [name]="'translators'" [value]="translator.id" (change)="handleTranslatorChange($event, translator.id)">
+        <label class="form-check-label" [for]="'translator' + translator.id">{{ translator.name }}</label>
+      </div>
+    </div>
+  </div>
+
+  <button  [disabled]="!form.valid || !ISBNform.valid || !priceForm.valid || !authorForm.valid ||!isAtLeastOneCategorySelected()"   type="submit" class="btn btn-primary">Add Book</button></form>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+
+
+
+<div class="main-body">
+	<div class="row">
+		<a routerLink="/users" style="margin-bottom: 15px; cursor: pointer; text-decoration: underline;">&#8592; Back to users</a>
+
+		<div class="col-lg-8 m-5 ">
+			<div class="card">
+				<div class="card-body">
+					<div class="row mb-3">
+
+            <form (ngSubmit)="onSubmit()" #bookForm="ngForm">
+              <div class="form-group">
+                <label for="Title">Book title:</label>
+                <input type="text" class="form-control" id="Title" name="Title" [(ngModel)]="book.Title" required>
+              </div> -->
+
+
+<!--
+              <div class="form-group">
+                <label for="isbn">ISBN:</label>
+                <input type="text" class="form-control" id="isbn" name="isbn "  [(ngModel)]="boook.ISBN"required>
+              </div>
+
+              <div class="form-group">
+                <label for="originalTitle">Original Title:</label>
+                <input type="text" class="form-control" id="originalTitle" name="originalTitle" [(ngModel)]="boook.OriginalTitle" required>
+              </div>
+
+              <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea class="form-control" id="description" name="description" [(ngModel)]="boook.Description" required></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="numberOfPages">Number of Pages:</label>
+                <input type="number" class="form-control" id="numberOfPages" name="numberOfPages" [(ngModel)]="boook.NumberOfPages" >
+              </div>
+
+              <div class="form-group">
+                <label for="year">Year:</label>
+                <input type="number" class="form-control" id="year" name="year" [(ngModel)]="boook.Year" required>
+              </div>
+
+              <div class="form-group">
+                <label for="edition">Edition:</label>
+                <input type="text" class="form-control" id="edition" name="edition" [(ngModel)]="boook.Edition" required>
+              </div>
+
+              <div class="form-group">
+                <label for="publisher">Publisher:</label>
+                <input type="text" class="form-control" id="publisher" name="publisher" [(ngModel)]="boook.Publisher" required>
+              </div>
+
+              <div class="form-group">
+                <label for="originalLanguage">Original Language:</label>
+                <input type="text" class="form-control" id="originalLanguage" name="originalLanguage" [(ngModel)]="boook.OriginalLanguage"  required>
+              </div>
+
+              <div class="form-group">
+                <label for="translatedToLanguage">Translated to Language:</label>
+                <input type="text" class="form-control" id="translatedToLanguage" name="translatedToLanguage" [(ngModel)]="boook.TranslatedToLanguage" required>
+              </div>
+
+              <div class="form-group">
+                <label for="price">Price:</label>
+                <input type="number" class="form-control" id="price" name="price" [(ngModel)]="boook.Price" required>
+              </div>
+
+              <div class="form-group">
+                <label for="author">Author:</label>
+                <select class="form-control" id="author" name="author" required>
+                  <option *ngFor="let author of Authors" [(ngModel)]="boook.AuthorId"  [value]="author.id">{{ author.firstName }}</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="categories" style="color:brown;font-size: 25px;">Categories:</label><br>
+                <div class="form-check" *ngFor="let category of categories">
+                  <input class="form-check-input" type="checkbox" [id]="'category' + category.id" [name]="'categories'" [value]="category.id">
+                  <label class="form-check-label"  [for]="'category' + category.id">{{ category.name }}</label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="translators" style="color:brown;font-size: 25px;">Translators:</label><br>
+                <div class="form-check" *ngFor="let translator of translators">
+                  <input class="form-check-input" type="checkbox" [id]="'translator' + translator.id" [name]="'translators'" [value]="translator.id">
+                  <label class="form-check-label"  [for]="'translator' + translator.id">{{ translator.name }}</label>
+                </div>
+              </div>
+ -->
+              <!-- <div class="form-group">
+                <label for="BookCoverFile">Book Cover:</label>
+                <input type="file" class="form-control-file" id="BookCoverFile" name="BookCoverFile" (change)="onFileChange($event)">
+              </div>
+
+
+              <br>
+              <input type="submit" class="btn btn-primary" value="Create Book">
+            </form>
+	</div>
+</div> -->

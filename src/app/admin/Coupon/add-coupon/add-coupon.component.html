@@ -1,0 +1,70 @@
+<div class="container-fluied bg-img">
+  <div class="row bg-trans">
+    <div class="container-fluied justify-content-center mb-5 mt-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-6 col-12 p-5">
+          <h1 class="hidding-offer text-white">ِAdd new Format</h1>
+          <form [formGroup]="addCoupon" #couponForm="ngForm">
+            <div class="mb-3">
+              <label for="name" class="form-label">Coupon Code</label>
+              <input #code formControlName="code" type="text" placeholder="Enter Coupon Name" class="form-control" id="name" aria-describedby="name"/>
+              <div *ngIf="addCoupon.controls.code.errors">
+                <div class="validateerrorstyle" *ngIf="addCoupon.controls.code.errors['minlength'] && addCoupon.controls.code.touched">
+                  <span class="error-message">Coupon Name must be at least 4 characters.</span>
+                </div>
+                <div class="validateerrorstyle" *ngIf="addCoupon.controls.code.errors['maxlength'] && addCoupon.controls.code.touched">
+                  <span class="error-message">Coupon name can have at most 30 characters.</span>
+                </div>
+                <div class="validateerrorstyle" *ngIf="addCoupon.controls.code.errors['required'] && addCoupon.controls.code.touched">
+                  <span class="error-message">Coupon name is required.</span>
+                </div>
+              </div>
+            </div>
+
+            <label   for="name" class="form-label">Coupon percentage </label>
+            <input  #percentage formControlName="percentage" type="text" placeholder="Enter Coupon percentage" class="form-control" id="name" aria-describedby="name"/>
+            <div *ngIf="addCoupon.controls.percentage.errors">
+              <div class="validateerrorstyle" *ngIf="addCoupon.controls.percentage.errors['pattern'] && addCoupon.controls.percentage.touched">
+                <span class="error-message">Coupon percentage must be between 1 to 100</span>
+              </div>
+              <div class="validateerrorstyle" *ngIf="addCoupon.controls.percentage.errors['required'] && addCoupon.controls.percentage.touched">
+                <span class="error-message">Coupon percentage is required.</span>
+              </div>
+            </div>
+
+            <label   for="name" class="form-label">Coupon Expiration Date </label>
+            <input #ExpirationDate formControlName="ExpirationDate" type="Date" placeholder="Enter Coupon Expiration Date" class="form-control" id="name" aria-describedby="name"/>
+            <div *ngIf="addCoupon.controls.ExpirationDate.errors">
+              <div class="validateerrorstyle" *ngIf="addCoupon.controls.ExpirationDate.errors['required'] && addCoupon.controls.ExpirationDate.touched">
+                <span class="error-message">Expiration Date is required and must be any day after today</span>
+              </div>
+            </div>
+
+            <div class="row justify-content-center mt-5">
+              <div class="col-10 text-center">
+                <div class="row justify-content-center">
+                  <div class="col-4">
+                    <button
+                    (click)="AddCoupon(couponForm.value)"
+                      class="btn btn-success"
+                      type="submit"
+                      value="Save Item"
+                      [disabled]="!couponForm.valid"
+                    >ADD</button>
+                  </div>
+                  <div class="col-2">
+                    <a
+                      routerLink="/formatMain"
+                      class="btn btn-danger"
+                      >Cancel</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

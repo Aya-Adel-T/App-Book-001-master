@@ -1,0 +1,258 @@
+<div class="container-fluid   p-3  " *ngIf="spinnerFlag==false else check">
+  <!-- Browse-Section -->
+  <div class="card border-0 shadow    ">
+    <div class="card-header bg-success  d-flex  justify-content-between align-items-center my-3  ">
+       <strong class="fs-5">Details</strong>
+    </div>
+
+        <!-- BOOK-CARD -->
+        <div class="card border-0 my-3" *ngIf="book"  >
+          <div class="row p-0  m-0 mx-2 " >
+            <div class=" col-sm-12  col-lg-5  rounded d-flex justify-content-center align-items-center   p-2 m-0    ">
+                  <img width="100%" height="70%" class="" src="{{book.cover}}" alt="">
+            </div>
+            <div class="col-sm-12 col-lg-7 ">
+              <div class="container m-0  p-0  ">
+                <div class="book-details mt-5">
+                  <p class=" fw-bold mb-1 fs-1">{{book.title}}</p>
+                  <hr>
+                  <!-- <p class=" fw-bold mb-1 fs-4 ms-5">{{book.originalTitle}}</p> -->
+                  <div class="rate mt-2 ms-3"  >
+                   Rate : <p-rating    ngModel="{{book.averageRate}}" [readonly]="true"
+                   (click) =openRate(book.isBookPurchased,book.isBookReviewed,book.id)  [cancel]="false"> </p-rating>
+                   <p-dialog header="Rate The Book" [(visible)]="rateFlag" [modal]="true" [breakpoints]="{ '960px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+                    <form class="w-100 mt-3" (ngSubmit)="addRate()" [formGroup]="rateForm">
+                      <input type="hidden" formControlName="bookId" ngModel="{{book.id}}" >
+                      <p-rating formControlName="rate"></p-rating>
+                      <textarea class="form-control my-3" name="review" formControlName="review" id="" ></textarea>
+                      <input [disabled]="rateForm.invalid" class="btn btn-outline-success form-control"
+                        type="submit" value="Submit"  *ngIf= 'isSuccess == false else check' >
+                      <!-- <p>{{rateForm.value|json}}</p> -->
+                      <ng-template #check>
+                        <app-spinner></app-spinner>
+                      </ng-template>
+                    </form>
+                </p-dialog>
+                <p-dialog header="Your Rate" *ngIf="userReview" [(visible)]="editRateFlag" [modal]="true"
+                [breakpoints]="{ '960px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+                 <div class="d-flex justify-content-center">
+                  <p-rating    ngModel="{{userReview.rate}}" [readonly]="true" [cancel]="false"> </p-rating>
+                 </div>
+                  <form class="w-100 mt-3"  (ngSubmit)="editRate()" [formGroup]="editRateForm">
+                    <input type="hidden" formControlName="bookId" ngModel="{{book.id}}" >
+                    <div class="d-flex">
+                      <textarea class="form-control  w-75" name="review" formControlName="review"  ngModel="{{userReview.text}}" ></textarea>
+                      <input [disabled]="editRateForm.invalid" class="btn btn-outline-success m-3"
+                        type="submit" value="Update"  *ngIf= 'isSuccess == false else check' >
+                    </div>
+
+                    <!-- <p>{{editRateForm.value|json}}</p> -->
+                    <ng-template #check>
+                      <app-spinner></app-spinner>
+                    </ng-template>
+                  </form>
+              </p-dialog>
+                   </div>
+
+                   <div class="price mt-2 ms-3 d-flex  ">
+                   <span class=" fs-4  fw-medium ">Price : </span>
+                    <ng-template #price>
+                      <p class=" fs-4 ms-3 fw-medium ">{{book.price|currency}}  </p>
+                    </ng-template>
+                    <p class=" d-flex  align-items-center  ms-3 fw-medium text-decoration-line-through text-danger  " *ngIf="book.discountPrice>0 else price" >{{book.price|currency}} </p>
+                    <p class=" fs-4 ms-3 fw-medium " *ngIf="book.discountPrice>0"> &#xa0;{{book.discountPrice|currency}}</p>
+                   </div>
+                   <div class="add fs-4 d-flex ">
+                    <button *ngIf="!book.isAddedToCart && book.isBookPurchased==false" class="btn btn-outline-success mx-3   mb-2" (click)="addToCart(book.title)">
+                      Add To Cart <i class="fa-solid fa-cart-shopping fs-5"></i>
+                    </button>
+                    <button *ngIf="!book.isAddedToWishList" class="btn btn-outline-danger mb-2 "
+                    (click)="addToWishList(book.title)">
+                      Add To WishList <i class="fa-regular fa-heart fs-5  "></i>
+                    </button>
+
+                    <!-- <i class="fa-solid fa-heart"></i> -->
+                 </div>
+                 <hr>
+                 <!-- Details -->
+                 <p class="px-3 fs-5  fw-semibold ">Discription : </p>
+                 <p class="px-3  text-body-emphasis   ">{{book.description}}</p>
+                 <div class=" p-3 ">
+                  <div class="d-flex ">
+                   <p class="me-2">Year: <span class="text-body-secondary">{{book.year}}</span> </p>
+                    <p class="me-2">Pages : <span class="text-body-secondary">{{book.numberOfPages}}</span>  </p>
+                    <p >Edition:   <span class="text-body-secondary">{{book.edition}}</span> </p>
+                  </div>
+
+
+                  <p >Publisher: <span class="text-body-secondary"> {{book.publisher}} </span> </p>
+                  <p >ISBN:      <span class="text-body-secondary">{{book.isbn}}</span> </p>
+                 </div>
+                 <!-- Categories -->
+                 <div class="container " *ngIf="book.bookCategories.length > 0">
+                  <p class="fw-semibold fs-5 ">Genres : </p>
+                  <div class="d-flex">
+                   <div class="me-2" *ngFor="let categories of book.bookCategories">
+                     <div class="text-center text-capitalize ">
+                       <img src="{{categories.category.image}}" alt="" height="80" width="80" class="rounded-circle  ">
+                       <p class="text-success-emphasis fw-medium ">{{categories.category.name}}</p>
+                     </div>
+                   </div>
+                 </div>
+                 </div>
+                  <!-- SNAPSHOTS -->
+                  <div class=""  *ngIf="book.snapshots.length > 0">
+                    <P class="  fs-5  fw-bold mt-3 ms-3  ">Snapshots : </P>
+                    <div class="d-flex flex flex-wrap  ">
+                    <div *ngFor="let snapshot of book.snapshots.slice(0, 5)">
+                    <div class="m-1">
+                    <p-image src="{{snapshot.image}}" alt="Image" height="110" width="90" [preview]="true"></p-image>
+                 </div>
+                </div>
+             </div>
+             </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+      </div>
+      </div>
+
+       <!-- SectionTwo -->
+       <div class="row">
+        <div class="col-sm-12 col-xl-8 ">
+        <!-- Author -->
+        <div class="card border-0  shadow   mt-2" *ngIf="book.author">
+          <div class="card-header fw-medium bg-success-subtle    fs-5  ">
+            About The Author
+          </div>
+          <div class="row">
+            <div class="col-sm-12  col-lg-2  d-flex  justify-content-center ms-lg-5 mt-3">
+                <img src="{{book.author.image}}" height="150" alt="" class="rounded-circle ">
+            </div>
+            <div class="col-sm-12   col-lg-8 d-flex  flex-column ">
+              <p class="fs-5  fw-medium  text-center text-lg-start mt-2 px-3">{{book.author.firstName}} {{book.author.lastName}}</p>
+              <p class="text-body-secondary px-3">{{book.author.about}}</p>
+            </div>
+          </div>
+         </div>
+         <!-- Translator -->
+         <ng-template ngIf="book.bookTranslators.length > 0">
+          <div *ngFor="let translators of book.bookTranslators">
+            <div class="card border-0 shadow  mt-2">
+              <div class="card-header fw-medium bg-success-subtle   fs-5  ">
+                About The Translator
+              </div>
+              <div class="row">
+                <div class="col-sm-12  col-lg-2  d-flex  justify-content-center ms-lg-5 mt-3">
+                    <img src="{{translators.translator.image}}" height="150" alt="" class="rounded-circle ">
+                </div>
+                <div class="col-sm-12  col-lg-8 d-flex justify-content-center flex-column ">
+                  <p class="fs-5  fw-medium text-center   text-lg-start mt-2 px-3">{{translators.translator.name}} </p>
+                  <p class="text-body-secondary px-3">{{translators.translator.description}}</p>
+                </div>
+              </div>
+             </div>
+           </div>
+         </ng-template>
+        </div>
+        <div class=" col-sm-12 col-xl-4">
+            <!-- Reviews -->
+       <div class=" mt-2 card border-0 shadow">
+        <div class="card-header bg-success fw-medium  ">Reviews ({{reviews.length}})</div>
+        <div *ngFor="let review of reviews">
+          <div class="row p-2  " >
+            <div class="col-4 d-flex flex-column  align-items-center justify-content-center    ">
+              <img *ngIf="review.customer.image else change " src="{{review.customer.image}}" height="50"  class="rounded-circle " alt="">
+              <ng-template #change>
+                <i class="fa-solid fa-circle-user text-success fs-1 "></i>
+                <!-- <img  src="./assets/images/user1.jpg" height="70" width="70" class="rounded-circle " alt=""> -->
+            </ng-template>
+              <p class="text-dark-emphasis small  ">{{review.customer.firstName}} {{review.customer.lastName}}</p>
+            </div >
+           <div class="col-8 d-flex     flex-column  ">
+            <p-rating  class="mt-2 "  ngModel="{{review.rate}}" [readonly]="true"   [cancel]="false"> </p-rating>
+            <p class="fw-medium  small my-1">{{review.text}}</p>
+            <div class="d-flex small   ">
+              <!-- REPLY -->
+              <p-button   [link]="true" [text]="true" severity="secondary" (click)="showDialog1(review.id)"
+               label="reply"></p-button>
+              <p-dialog header="Add Reply" [(visible)]="dialogFlag1"  [modal]="true"
+              [breakpoints]="{ '960px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+
+                <form *ngIf="review.id"
+                     id="formlogin"
+                     class="text-sm-start mx-1 mx-md-4"
+                     (ngSubmit)="addReply()"
+                     [formGroup]="replyForm"
+                  >
+               <div class="form-floating mb-4">
+                 <textarea  class="form-control " id="floatingInput" formControlName="text" ></textarea>
+                 <label for="floatingInput">Reply</label>
+              </div>
+               <div class="mb-4">
+              <input
+
+              ngModel="{{selectedReviewId}}"
+                type="hidden"
+
+                id="reviewId"
+                formControlName="reviewId"
+              />
+            </div>
+            <button
+            [disabled]="replyForm.invalid"
+            type="submit"
+            class="btn btn-outline-success col-12 rounded-0 mb-3  "
+            *ngIf= 'isSuccess == false else check'
+          >
+            Add
+          </button>
+          <!-- <p>{{replyForm.value|json}}</p> -->
+            <ng-template #check>
+              <app-spinner></app-spinner>
+            </ng-template>
+          </form>
+              </p-dialog>
+        <!-- VIEW REPLIES -->
+          <p-button *ngIf="review.replies.length >0 " [link]="true" [text]="true"
+            severity="secondary" (click)="showDialog2(review.id)" label="View Replies"  badge="{{review.replies.length}}" badgeClass="p-badge-info"></p-button>
+          <p-dialog header="Replies" [(visible)]="dialogFlag2"  [modal]="true" [breakpoints]="{ '960px': '95vw' }"
+          [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+
+          <div *ngIf="replies">
+            <div class="d-flex "  *ngFor="let reply of replies">
+              <div class="d-flex vw-100  justify-content-center  flex-column border-bottom p-2 shadow  ">
+                <div class="mb-0 d-flex align-items-center  ">
+                  <img *ngIf="reply.customer.image else change "
+                  src="{{reply.customer.image}}" height="50"
+                  class="rounded-circle float-start  " alt="">
+                  <ng-template #change>
+                    <i class="fa-solid fa-circle-user fs-1 text-success"></i>
+                </ng-template>
+                <p class="text-dark-emphasis fw-semibold   p-3 pb-0    ">{{reply.customer.firstName}} {{reply.customer.lastName}}</p>
+                </div>
+                <p class="small mt-1 ms-5 ">{{reply.text}}</p>
+              </div>
+             </div>
+          </div>
+
+          </p-dialog>
+
+
+           </div>
+           </div>
+          </div>
+          <hr>
+        </div>
+       </div>
+        </div>
+       </div>
+
+    </div>
+    <p-toast></p-toast>
+
+  <ng-template #check>
+    <app-main-spinner></app-main-spinner>
+  </ng-template>
